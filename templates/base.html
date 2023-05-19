@@ -127,10 +127,10 @@
           <div class="footer-widget-8">
             <h5 class="mb-3 fw-bold">Меню</h5>
              <ul class="widget-link list-unstyled">
-               <li><a href="javascript:;">Главная</a></li>
-               <li><a href="javascript:;">Каталог</a></li>
-               <li><a href="javascript:;">О нас</a></li>
-               <li><a href="javascript:;">Контакты</a></li>
+               <li><a href="{% url 'index' %}">Главная</a></li>
+               <li><a href="{% url 'categories' %}">Каталог</a></li>
+               <li><a href="{% url 'about' %}">О нас</a></li>
+               <li><a href="{% url 'contact' %}">Контакты</a></li>
              </ul>
           </div>
         </div>
