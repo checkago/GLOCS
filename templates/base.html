@@ -20,7 +20,8 @@
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
   <link href="{% static 'assets/css/dark-theme.css' %}" rel="stylesheet">
 
-  <title>Shopingo - eCommerce HTML Template</title>
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ meta_description }}">
 </head>
 
 <body>
@@ -72,6 +73,7 @@
           </ul>
         </div>
       </div>
+      <!--
       <ul class="navbar-nav secondary-menu flex-row">
         <li class="nav-item">
           <a class="nav-link dark-mode-icon" href="#">
@@ -96,6 +98,7 @@
           <a class="nav-link" href="account-dashboard.html"><i class="bi bi-person-circle"></i></a>
         </li>
       </ul>
+      -->
     </nav>
   </header>
   <!--end top header-->
@@ -110,42 +113,26 @@
         <div class="col">
           <div class="footer-widget-6">
             <img src="assets/images/logo.webp" class="logo-img mb-3" alt="">
-            <h5 class="mb-3 fw-bold">About Us</h5>
+            <h5 class="mb-3 fw-bold">О компании</h5>
              <p class="mb-2">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
 
-             <a class="link-dark" href="javascript:;">Read More</a>
+             <a class="link-dark" href="{% url 'about' %}">Подробнее</a>
           </div>
         </div>
         <div class="col">
           <div class="footer-widget-7">
-            <h5 class="mb-3 fw-bold">Explore</h5>
+            <h5 class="mb-3 fw-bold">Меню</h5>
              <ul class="widget-link list-unstyled">
-               <li><a href="javascript:;">Fashion</a></li>
-               <li><a href="javascript:;">Women</a></li>
-               <li><a href="javascript:;">Furniture</a></li>
-               <li><a href="javascript:;">Shoes</a></li>
-               <li><a href="javascript:;">Topwear</a></li>
-               <li><a href="javascript:;">Brands</a></li>
-               <li><a href="javascript:;">Kids</a></li>
-             </ul>
-          </div>
-        </div>
-        <div class="col">
-          <div class="footer-widget-8">
-            <h5 class="mb-3 fw-bold">Company</h5>
-             <ul class="widget-link list-unstyled">
-               <li><a href="javascript:;">About Us</a></li>
-               <li><a href="javascript:;">Contact Us</a></li>
-               <li><a href="javascript:;">FAQ</a></li>
-               <li><a href="javascript:;">Privacy</a></li>
-               <li><a href="javascript:;">Terms</a></li>
-               <li><a href="javascript:;">Complaints</a></li>
+               <li><a href="javascript:;">Главная</a></li>
+               <li><a href="javascript:;">Каталог</a></li>
+               <li><a href="javascript:;">О нас</a></li>
+               <li><a href="javascript:;">Контакты</a></li>
              </ul>
           </div>
         </div>
         <div class="col">
           <div class="footer-widget-9">
-            <h5 class="mb-3 fw-bold">Follow Us</h5>
+            <h5 class="mb-3 fw-bold">Следите за нами</h5>
              <div class="social-link d-flex align-items-center gap-2">
                <a href="javascript:;"><i class="bi bi-facebook"></i></a>
                <a href="javascript:;"><i class="bi bi-twitter"></i></a>
@@ -153,37 +140,21 @@
                <a href="javascript:;"><i class="bi bi-youtube"></i></a>
                <a href="javascript:;"><i class="bi bi-instagram"></i></a>
              </div>
+              {% for Organization in contact_data %}
              <div class="mb-3 mt-3">
-              <h5 class="mb-0 fw-bold">Support</h5>
-              <p class="mb-0 text-muted">support@example.com</p>
+              <h5 class="mb-0 fw-bold">Электронная почта</h5>
+              <p class="mb-0 text-muted">{{ Organization.email }}</p>
              </div>
              <div class="">
-              <h5 class="mb-0 fw-bold">Toll Free</h5>
-              <p class="mb-0 text-muted">1800- 8xx 2xx</p>
+              <h5 class="mb-0 fw-bold">Телефон</h5>
+              <p class="mb-0 text-muted">{{ Organization.phone }}</p>
              </div>
+              {% endfor %}
           </div>
         </div>
        </div><!--end row-->
        <div class="my-5"></div>
-       <div class="row">
-         <div class="col-12">
-           <div class="text-center">
-            <h5 class="fw-bold mb-3">Download Mobile App</h5>
-           </div>
-          <div class="app-icon d-flex flex-column flex-sm-row align-items-center justify-content-center gap-2">
-            <div>
-              <a href="javascript:;">
-                <img src="assets/images/play-store.webp" width="160" alt="">
-              </a>
-            </div>
-            <div>
-              <a href="javascript:;">
-                <img src="assets/images/apple-store.webp" width="160" alt="">
-              </a>
-            </div>
-          </div>
-         </div>
-       </div><!--end row-->
+
 
     </div>
   </section>

@@ -3,12 +3,14 @@ from django.db import models
 
 class Organization(models.Model):
     name = models.CharField(max_length=150, verbose_name='Наименование')
-    inn = models.CharField(max_length=50, verbose_name='ИНН')
+    inn = models.CharField(max_length=50, verbose_name='ИНН', blank=True, null=True)
     postcode = models.CharField(max_length=150, verbose_name='Почтовый индекс')
     town = models.CharField(max_length=150, verbose_name='Город')
     address = models.CharField(max_length=250, verbose_name='Адрес')
     email = models.EmailField(max_length=50, verbose_name='Почта')
     phone = models.CharField(max_length=20, verbose_name='Телефон')
+    logo = models.ImageField(upload_to='media/organization/logo', verbose_name='Логотип', blank=True, null=True)
+    active = models.BooleanField(default=False, verbose_name='Основная')
 
     class Meta:
         verbose_name = 'Организация'
@@ -68,8 +70,8 @@ class Product(models.Model):
     featured = models.BooleanField(default=False, verbose_name='Виден в рекомендуемых')
 
     class Meta:
-        verbose_name = 'Продукт'
-        verbose_name_plural = 'Продукты'
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
 
     def __str__(self):
         return self.name
@@ -112,6 +114,19 @@ class Partner(models.Model):
     class Meta:
         verbose_name = 'Партнер'
         verbose_name_plural = 'Партнеры'
+
+    def __str__(self):
+        return self.name
+
+
+class Social(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Название')
+    link = models.URLField(verbose_name='Ссылка')
+    icon = models.CharField(max_length=10, verbose_name='Тег иконки')
+
+    class Meta:
+        verbose_name = 'Соц.сеть'
+        verbose_name_plural = 'Соц.сети'
 
     def __str__(self):
         return self.name

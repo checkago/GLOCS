@@ -6,17 +6,23 @@ from web.models import *
 class IndexView(views.View):
 
     def get(self, request, *args, **kwargs):
+        title = 'ALLSHOES'
+        meta_description = 'Описание'
         brands = Brand.objects.all()
         categories = Category.objects.all()
         sliders = Banner.objects.all()
         products = Product.objects.all()
         featured = Product.objects.filter(featured=True)
+        contact_data = Organization.objects.filter(active=True)
         context = {
+            'title': title,
+            'meta_description': meta_description,
             'brands': brands,
             'categories': categories,
             'products': products,
             'sliders': sliders,
-            'featured': featured
+            'featured': featured,
+            'contact_data': contact_data
         }
         return render(request, 'index.html', context)
 
