@@ -8,8 +8,7 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('about', about, name='about'),
     path('contacts', contact, name='contact'),
-    path('brand-glocs/', BrandGlocsView.as_view(), name='brand-glocs'),
-    path('brand-sunrise/', BrandSunriseView.as_view(), name='brand-sunrise'),
+    path('catalog/', CategoryView.as_view(), name='categories'),
 ]
 
 if settings.MEDIA_ROOT:
