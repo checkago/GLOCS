@@ -6,7 +6,7 @@ from web.models import *
 class IndexView(views.View):
 
     def get(self, request, *args, **kwargs):
-        title = 'ALLSHOES'
+        title = 'GLOCS'
         meta_description = 'Описание'
         brands = Brand.objects.all()
         categories = Category.objects.all()
@@ -42,17 +42,31 @@ def contact(request):
     return render(request, 'contacts.html', {'title': title, 'description': description, 'contact_data': contact_data})
 
 
-class CategoryView(views.View):
-    model = Category
-    categories = Category.objects.all()
+class BrandGlocsView(views.View):
+    model = Brand
 
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
-        products = Product.objects.all()
-        brands = Brand.objects.all()
+        brand = Brand.objects.get(name='GLOCS')
+        products = Product.objects.filter(brand=brand)
         context = {
             'categories': categories,
             'products': products,
-            'brands': brands,
+            'brand': brand,
         }
-        return render(request, 'category_detail.html', context)
+        return render(request, 'brand.html', context)
+
+
+class BrandSunriseView(views.View):
+    model = Brand
+
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        brand = Brand.objects.get(name='SUNRISE')
+        products = Product.objects.filter(brand=brand)
+        context = {
+            'categories': categories,
+            'products': products,
+            'brand': brand,
+        }
+        return render(request, 'brand.html', context)
