@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.contrib.contenttypes.models import ContentType
+from django.shortcuts import render, get_object_or_404
 from django import views
+from django.views.generic import DetailView
+
 from web.models import *
 
 
@@ -44,7 +47,6 @@ def contact(request):
 
 class CategoryView(views.View):
     model = Category
-    categories = Category.objects.all()
 
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
@@ -56,3 +58,40 @@ class CategoryView(views.View):
             'brands': brands,
         }
         return render(request, 'category_detail.html', context)
+
+
+class BrandGlocsView(views.View):
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        brand = Brand.objects.get(id='1')
+        products = Product.objects.filter(brand=brand)
+        image = ImageGallery.objects.filter(id=1, content_type=ContentType.objects.get_for_model(Product))
+        context = {
+            'categories': categories,
+            'products': products,
+            'brand': brand,
+            'image': image
+        }
+        return render(request, 'brand.html', context)
+
+
+class BrandSunriseView(views.View):
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        brand = Brand.objects.get(id='2')
+        products = Product.objects.filter(brand=brand)
+        image = ImageGallery.objects.filter(id=1, content_type=ContentType.objects.get_for_model(Product))
+        context = {
+            'categories': categories,
+            'products': products,
+            'brand': brand,
+            'image': image
+        }
+        return render(request, 'brand.html', context)
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product_detail.html'
+    context_object_name = 'product'
+

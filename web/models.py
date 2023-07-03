@@ -1,4 +1,27 @@
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.urls import reverse
+from django.utils.safestring import mark_safe
+
+from utils import upload_function
+
+
+class ImageGallery(models.Model):
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    image = models.ImageField(upload_to=upload_function)
+
+    class Meta:
+        verbose_name = 'Галерея изображений'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return f"Изображение для {self.content_object}"
+
+    def image_url(self):
+        return mark_safe(f'<img src="{self.image.url}" width="auto" height="100px"')
 
 
 class Organization(models.Model):
@@ -65,9 +88,9 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Категория')
     color = models.ForeignKey('Color', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Цвет')
     size = models.CharField(max_length=150, verbose_name='Размеры')
-    image = models.ImageField(upload_to='media/products', verbose_name='Фото')
     wb_link = models.URLField(verbose_name='Ссылка на маркетплейс', null=True, blank=True)
     featured = models.BooleanField(default=False, verbose_name='Виден в рекомендуемых')
+    image_gallery = GenericRelation('imagegallery')
 
     class Meta:
         verbose_name = 'Товар'
@@ -75,6 +98,14 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def ct_model(self):
+        return self._meta.model_name
+
+    def get_absolute_url(self):
+        return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug': self.brand.slug,
+                                                 'product_slug': self.slug})
 
 
 class Color(models.Model):
