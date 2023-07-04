@@ -20,4 +20,4 @@ RUN chmod +x entrypoint.sh
 
 COPY . .
 
-ENTRYPOINT ["sh", "/usr/src/GLOCS/entrypoint.sh"]
+ENTRYPOINT ["sh", "/usr/src/bibsite/entrypoint.sh"]
