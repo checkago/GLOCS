@@ -3,7 +3,7 @@ FROM python:3.9-alpine
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /usr/src/bibsite
+WORKDIR /usr/src/GLOCS
 
 COPY requirements.txt .
 COPY entrypoint.sh .
