@@ -376,15 +376,13 @@
                         <div class="card border shadow-none">
                           <div class="position-relative overflow-hidden">
                             <a href="{% url 'product-detail' Product.pk %}">
-                                {% if Product.image_gallery.first %}
-                                    <img src="{{ Product.image_gallery.first.image.url }}" class="card-img-top"   alt="First Image">
-                                {% else %}
-                                    <p>No image available</p>
-                                {% endif %}
+                                {% for image in Product.image_gallery.all|slice:"2:3" %}
+                                    <img src="{{ image.image.url }}" class="card-img-top"   alt="First Image">
+                                {% endfor %}
                             </a>
                           </div>
                           <div class="card-body border-top">
-                            <h5 class="mb-0 fw-bold product-short-title">{{ Product.name }}</h5>
+                            <h5 class="mb-0 fw-bold product-short-title">{{ Product }}</h5>
                             <p class="mb-0 product-short-name">{{ Product.color }}</p>
                           </div>
                         </div>

@@ -1,3 +1,5 @@
+from typing import Type
+
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -12,6 +14,7 @@ class ImageGallery(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     image = models.ImageField(upload_to=upload_function)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='image_gallery')
 
     class Meta:
         verbose_name = 'Галерея изображений'
@@ -20,8 +23,10 @@ class ImageGallery(models.Model):
     def __str__(self):
         return f"Изображение для {self.content_object}"
 
-    def image_url(self):
-        return mark_safe(f'<img src="{self.image.url}" width="auto" height="100px"')
+    def image_tag(self):
+        return mark_safe(f'<img src="{self.image.url}" width="auto" height="100px" />')
+
+    image_tag.short_description = 'Миниатюра изображения'
 
 
 class Organization(models.Model):
@@ -69,6 +74,18 @@ class Category(models.Model):
         return self.name
 
 
+class Type(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Наименование')
+    slug = models.SlugField(unique=True, verbose_name='Псевдоним')
+
+    class Meta:
+        verbose_name = 'Вид обуви'
+        verbose_name_plural = 'Виды обуви'
+
+    def __str__(self):
+        return self.name
+
+
 class Brand(models.Model):
     name = models.CharField(max_length=150, verbose_name='Бренд')
     slug = models.SlugField(unique=True, verbose_name='Псевдоним')
@@ -82,10 +99,9 @@ class Brand(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Название')
-    slug = models.SlugField(unique=True, verbose_name='Псевдоним')
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Вид обуви')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Категория')
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
     color = models.ForeignKey('Color', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Цвет')
     size = models.CharField(max_length=150, verbose_name='Размеры')
     wb_link = models.URLField(verbose_name='Ссылка на маркетплейс', null=True, blank=True)
@@ -97,15 +113,14 @@ class Product(models.Model):
         verbose_name_plural = 'Товары'
 
     def __str__(self):
-        return self.name
+        return f"{self.type} {self.category} {self.brand}"
 
     @property
     def ct_model(self):
         return self._meta.model_name
 
     def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug': self.brand.slug,
-                                                 'product_slug': self.slug})
+        return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug': self.brand.slug})
 
 
 class Color(models.Model):

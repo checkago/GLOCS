@@ -3,13 +3,22 @@ from django.contrib import admin
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 from django.contrib.contenttypes.admin import GenericTabularInline
+from django.utils.html import format_html
 
 from .models import *
 
 
-class ImageGalleryInline(GenericTabularInline):
+class ImageGalleryInline(admin.TabularInline):
     model = ImageGallery
-    readonly_fields = ('image_url',)
+    fields = ('thumbnail', 'image')
+    readonly_fields = ('thumbnail',)
+    exclude = ('content_type', 'object_id')
+
+    def thumbnail(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="auto" height="150" />', obj.image.url)
+        return ''
+    thumbnail.short_description = 'Фото'
 
 
 class ProductAdminForm(forms.ModelForm):
@@ -23,9 +32,14 @@ class ProductAdminForm(forms.ModelForm):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
     inlines = [ImageGalleryInline]
     form = ProductAdminForm
+    list_display = ('combined_fields',)
+
+    def combined_fields(self, obj):
+        return f"{obj.type} {obj.category} {obj.brand}, цвет {obj.color}"
+
+    combined_fields.short_description = 'Combined Fields'
 
 
 @admin.register(Brand)
@@ -35,6 +49,11 @@ class BrandAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+
+
+@admin.register(Type)
+class TypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
