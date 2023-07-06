@@ -17,6 +17,7 @@ class ImageUploadHelper:
             'upload_postfix': 'slider_images'
         }
     }
+
     def __init__(self, field_name_to_combine, instance, filename, upload_postfix):
         self.field_name_to_combine = field_name_to_combine
         self.instance = instance

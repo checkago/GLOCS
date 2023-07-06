@@ -132,21 +132,15 @@
                 <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
                     class="bi bi-zoom-in"></i></a>
               </div>
-              <a href="#">
-                <img src="{{ Product.image.url }}" class="card-img-top" alt="...">
+              <a href="{% url 'product-detail' Product.pk %}">
+                {% for image in Product.image_gallery.all|slice:"2:3" %}
+                    <img src="{{ image.image.url }}" class="card-img-top"   alt="First Image">
+                {% endfor %}
               </a>
             </div>
             <div class="card-body">
               <div class="product-info text-center">
-                <h6 class="mb-1 fw-bold product-name">{{ Product.name }}</h6>
-                <div class="ratings mb-1 h6">
-                  <i class="bi bi-star-fill text-warning"></i>
-                  <i class="bi bi-star-fill text-warning"></i>
-                  <i class="bi bi-star-fill text-warning"></i>
-                  <i class="bi bi-star-fill text-warning"></i>
-                  <i class="bi bi-star-fill text-warning"></i>
-                </div>
-                <p class="mb-0 h6 fw-bold product-price">$49</p>
+                <h6 class="mb-1 fw-bold product-name">{{ Product }}</h6>
               </div>
             </div>
           </div>
@@ -192,6 +186,7 @@
         <div class="tab-content tabular-product">
           <div class="tab-pane fade show active" id="new-arrival">
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-4">
+                {% for Product in products %}
               <div class="col">
                 <div class="card">
                   <div class="position-relative overflow-hidden">
@@ -202,13 +197,15 @@
                       <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
                           class="bi bi-zoom-in"></i></a>
                     </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/01.webp' %}" class="card-img-top" alt="...">
+                    <a href="{% url 'product-detail' Product.pk %}">
+                      {% for image in Product.image_gallery.all|slice:"2:3" %}
+                        <img src="{{ image.image.url }}" class="card-img-top"   alt="First Image">
+                      {% endfor %}
                     </a>
                   </div>
                   <div class="card-body">
                     <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
+                      <h6 class="mb-1 fw-bold product-name">{{ product }}</h6>
                       <div class="ratings mb-1 h6">
                         <i class="bi bi-star-fill text-warning"></i>
                         <i class="bi bi-star-fill text-warning"></i>
@@ -216,273 +213,11 @@
                         <i class="bi bi-star-fill text-warning"></i>
                         <i class="bi bi-star-fill text-warning"></i>
                       </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col">
-                <div class="card">
-                  <div class="ribban">New Season</div>
-                  <div class="position-relative overflow-hidden">
-                    <div
-                      class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                      <a href="#"><i class="bi bi-heart"></i></a>
-                      <a href="#"><i class="bi bi-basket3"></i></a>
-                      <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                          class="bi bi-zoom-in"></i></a>
-                    </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/02.webp' %}" class="card-img-top" alt="...">
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
-                      <div class="ratings mb-1 h6">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card">
-                  <div class="position-relative overflow-hidden">
-                    <div
-                      class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                      <a href="#"><i class="bi bi-heart"></i></a>
-                      <a href="#"><i class="bi bi-basket3"></i></a>
-                      <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                          class="bi bi-zoom-in"></i></a>
-                    </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/03.webp' %}" class="card-img-top" alt="...">
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
-                      <div class="ratings mb-1 h6">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card">
-                  <div class="position-relative overflow-hidden">
-                    <div
-                      class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                      <a href="#"><i class="bi bi-heart"></i></a>
-                      <a href="#"><i class="bi bi-basket3"></i></a>
-                      <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                          class="bi bi-zoom-in"></i></a>
-                    </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/04.webp' %}" class="card-img-top" alt="...">
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
-                      <div class="ratings mb-1 h6">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card">
-                  <div class="position-relative overflow-hidden">
-                    <div
-                      class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                      <a href="#"><i class="bi bi-heart"></i></a>
-                      <a href="#"><i class="bi bi-basket3"></i></a>
-                      <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                          class="bi bi-zoom-in"></i></a>
-                    </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/05.webp' %}" class="card-img-top" alt="...">
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
-                      <div class="ratings mb-1 h6">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card">
-                  <div class="position-relative overflow-hidden">
-                    <div
-                      class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                      <a href="#"><i class="bi bi-heart"></i></a>
-                      <a href="#"><i class="bi bi-basket3"></i></a>
-                      <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                          class="bi bi-zoom-in"></i></a>
-                    </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/06.webp' %}" class="card-img-top" alt="...">
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
-                      <div class="ratings mb-1 h6">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card">
-                  <div class="position-relative overflow-hidden">
-                    <div
-                      class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                      <a href="#"><i class="bi bi-heart"></i></a>
-                      <a href="#"><i class="bi bi-basket3"></i></a>
-                      <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                          class="bi bi-zoom-in"></i></a>
-                    </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/07.webp' %}" class="card-img-top" alt="...">
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
-                      <div class="ratings mb-1 h6">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card">
-                  <div class="position-relative overflow-hidden">
-                    <div
-                      class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                      <a href="#"><i class="bi bi-heart"></i></a>
-                      <a href="#"><i class="bi bi-basket3"></i></a>
-                      <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                          class="bi bi-zoom-in"></i></a>
-                    </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/08.webp' %}" class="card-img-top" alt="...">
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
-                      <div class="ratings mb-1 h6">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card">
-                  <div class="position-relative overflow-hidden">
-                    <div
-                      class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                      <a href="#"><i class="bi bi-heart"></i></a>
-                      <a href="#"><i class="bi bi-basket3"></i></a>
-                      <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                          class="bi bi-zoom-in"></i></a>
-                    </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/09.webp' %}" class="card-img-top" alt="...">
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
-                      <div class="ratings mb-1 h6">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card">
-                  <div class="position-relative overflow-hidden">
-                    <div
-                      class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                      <a href="#"><i class="bi bi-heart"></i></a>
-                      <a href="#"><i class="bi bi-basket3"></i></a>
-                      <a href="#" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                          class="bi bi-zoom-in"></i></a>
-                    </div>
-                    <a href="product-details.html">
-                      <img src="{% static 'assets/images/new-arrival/10.webp' %}" class="card-img-top" alt="...">
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <div class="product-info text-center">
-                      <h6 class="mb-1 fw-bold product-name">Product Name</h6>
-                      <div class="ratings mb-1 h6">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </div>
-                      <p class="mb-0 h6 fw-bold product-price">$49</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                {% endfor %}
             </div>
           </div>
           <div class="tab-pane fade" id="best-sellar">

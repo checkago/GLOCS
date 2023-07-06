@@ -14,7 +14,6 @@ class ImageGallery(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     image = models.ImageField(upload_to=upload_function)
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='image_gallery')
 
     class Meta:
         verbose_name = 'Галерея изображений'
@@ -23,10 +22,8 @@ class ImageGallery(models.Model):
     def __str__(self):
         return f"Изображение для {self.content_object}"
 
-    def image_tag(self):
+    def image_url(self):
         return mark_safe(f'<img src="{self.image.url}" width="auto" height="100px" />')
-
-    image_tag.short_description = 'Миниатюра изображения'
 
 
 class Organization(models.Model):
@@ -103,9 +100,10 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Категория')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
     color = models.ForeignKey('Color', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Цвет')
-    size = models.CharField(max_length=150, verbose_name='Размеры')
+    size = models.CharField(max_length=150, verbose_name='Размеры', blank=True, null=True)
     wb_link = models.URLField(verbose_name='Ссылка на маркетплейс', null=True, blank=True)
     featured = models.BooleanField(default=False, verbose_name='Виден в рекомендуемых')
+    description = models.TextField(verbose_name='Описание', blank=True, null=True)
     image_gallery = GenericRelation('imagegallery')
 
     class Meta:

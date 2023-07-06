@@ -3,26 +3,17 @@ from django.contrib import admin
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 from django.contrib.contenttypes.admin import GenericTabularInline
-from django.utils.html import format_html
 
 from .models import *
 
 
-class ImageGalleryInline(admin.TabularInline):
+class ImageGalleryInline(GenericTabularInline):
     model = ImageGallery
-    fields = ('thumbnail', 'image')
-    readonly_fields = ('thumbnail',)
-    exclude = ('content_type', 'object_id')
-
-    def thumbnail(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" width="auto" height="150" />', obj.image.url)
-        return ''
-    thumbnail.short_description = 'Фото'
+    readonly_fields = ('image_url',)
 
 
 class ProductAdminForm(forms.ModelForm):
-    description = forms.CharField(widget=CKEditorUploadingWidget(config_name='awesome_ckeditor'))
+    description = forms.CharField(widget=CKEditorUploadingWidget(config_name='awesome_ckeditor'), required=False)
 
     class Meta:
         verbose_name = 'Текст'
