@@ -35,10 +35,42 @@
                     <div class="filter-sidebar d-none d-xl-flex">
                         <div class="card rounded-0 w-100">
                             <div class="card-body">
+
+                                <form action="{% url 'brand-glocs' %}" method="get">
+                                    <div class="product-categories">
+                                        <h6 class="text-uppercase mb-3">ВИД ОБУВИ</h6>
+                                        <ul class="list-unstyled mb-0 categories-list">
+                                            <li>
+                                                <div class="form-check">
+                                                    {% for type in types %}
+                                                    <input class="form-check-input" type="checkbox" name="type" value="{{ type }}">
+                                                    <label class="form-check-label" for="{{ type }}">{{ type }}</label>
+                                                  {% endfor %}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                <hr>
+                                    <h6>Категория</h6>
+                                  {% for category in categories %}
+                                    <input class="form-check-input"  type="checkbox" name="category" value="{{ category }}"> {{ category }}<br>
+                                  {% endfor %}
+                                <hr>
+                                    <h6>Цвет</h6>
+                                   {% for color in colors %}
+                                    <input type="checkbox" name="color" value="{{ color }}"> {{ color }}<br>
+                                  {% endfor %}
+                                <hr>
+                                    <input type="submit" class="btn btn-outline-primary btn-lg" value="Отправить">
+                                </form>
+
+                                <hr class="pt-3">
                                 <div class="align-items-center d-flex d-xl-none">
                                     <h6 class="text-uppercase mb-0">Филтр</h6>
                                     <div class="btn-mobile-filter-close btn-close ms-auto cursor-pointer"></div>
                                 </div>
+
+
                                 <hr class="d-flex d-xl-none" />
                                 <div class="product-categories">
                                     <h6 class="text-uppercase mb-3">Вид обуви</h6>
@@ -194,6 +226,8 @@
                           </div>
                         </div>
                       </div>
+                        {% empty %}
+                            <p>Нет доступных товаров.</p>
                         {% endfor %}
                   </div><!--end row-->
                 </div>
