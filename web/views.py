@@ -91,11 +91,24 @@ class BrandGlocsView(views.View):
 class BrandSunriseView(views.View):
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
+        types = Type.objects.all()
+        colors = Color.objects.all()
         brand = Brand.objects.get(id='2')
         products = Product.objects.filter(brand=brand)
+        categories_selected = request.GET.getlist('category')
+        types_selected = request.GET.getlist('type')
+        colors_selected = request.GET.getlist('color')
+        if categories_selected:
+            products = products.filter(category__name__in=categories_selected)
+        if types_selected:
+            products = products.filter(type__name__in=types_selected)
+        if colors_selected:
+            products = products.filter(color__name__in=colors_selected)
         image = ImageGallery.objects.filter(id=1, content_type=ContentType.objects.get_for_model(Product))
         context = {
             'categories': categories,
+            'types': types,
+            'colors': colors,
             'products': products,
             'brand': brand,
             'image': image

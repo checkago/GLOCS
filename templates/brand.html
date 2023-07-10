@@ -36,162 +36,54 @@
                         <div class="card rounded-0 w-100">
                             <div class="card-body">
 
-                                <form action="{% url 'brand-glocs' %}" method="get">
+                                <form method="get">
                                     <div class="product-categories">
                                         <h6 class="text-uppercase mb-3">ВИД ОБУВИ</h6>
                                         <ul class="list-unstyled mb-0 categories-list">
+                                            {% for type in types %}
                                             <li>
                                                 <div class="form-check">
-                                                    {% for type in types %}
                                                     <input class="form-check-input" type="checkbox" name="type" value="{{ type }}">
                                                     <label class="form-check-label" for="{{ type }}">{{ type }}</label>
-                                                  {% endfor %}
                                                 </div>
                                             </li>
+                                            {% endfor %}
                                         </ul>
                                     </div>
                                 <hr>
-                                    <h6>Категория</h6>
-                                  {% for category in categories %}
-                                    <input class="form-check-input"  type="checkbox" name="category" value="{{ category }}"> {{ category }}<br>
-                                  {% endfor %}
-                                <hr>
-                                    <h6>Цвет</h6>
-                                   {% for color in colors %}
-                                    <input type="checkbox" name="color" value="{{ color }}"> {{ color }}<br>
-                                  {% endfor %}
-                                <hr>
-                                    <input type="submit" class="btn btn-outline-primary btn-lg" value="Отправить">
-                                </form>
-
-                                <hr class="pt-3">
-                                <div class="align-items-center d-flex d-xl-none">
-                                    <h6 class="text-uppercase mb-0">Филтр</h6>
-                                    <div class="btn-mobile-filter-close btn-close ms-auto cursor-pointer"></div>
-                                </div>
-
-
-                                <hr class="d-flex d-xl-none" />
-                                <div class="product-categories">
-                                    <h6 class="text-uppercase mb-3">Вид обуви</h6>
-                                    <ul class="list-unstyled mb-0 categories-list">
-                                        <li>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="Small">
-                                                <label class="form-check-label" for="Small">Сабо</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="Small">
-                                                <label class="form-check-label" for="Small">Сапоги</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="Small">
-                                                <label class="form-check-label" for="Small">Шлепки</label>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                                <hr>
-                                <div class="size-range">
+                                    <div class="product-categories">
                                     <h6 class="text-uppercase mb-3">Категория</h6>
-                                    <ul class="list-unstyled mb-0 categories-list">
-                                        <li>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="Small">
-                                                <label class="form-check-label" for="Small">Женские</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="Medium">
-                                                <label class="form-check-label" for="Medium">Мужские</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="Large">
-                                                <label class="form-check-label" for="Large">Детские</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        <ul class="list-unstyled mb-0 categories-list">
+                                            {% for category in categories %}
+                                            <li>
+                                                <div class="form-check">
+                                                    <input class="form-check-input"  type="checkbox" name="category" value="{{ category }}">
+                                                    <label class="form-check-label" for="{{ category }}">{{ category }}</label>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
                                 <hr>
-                                <div class="product-brands">
-                                    <h6 class="text-uppercase mb-3">Бренд</h6>
-                                    <ul class="list-unstyled mb-0 categories-list">
-                                        <li>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="Adidas">
-                                                <label class="form-check-label" for="Adidas">GLOCS</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="Armani">
-                                                <label class="form-check-label" for="Armani">БУКВЫ</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="CalvinKlein">
-                                                <label class="form-check-label" for="CalvinKlein">ЭРА-РА</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <hr>
-                                <div class="product-colors">
+                                <div class="product-categories">
                                     <h6 class="text-uppercase mb-3">Цвет</h6>
-                                    <ul class="list-unstyled mb-0 categories-list">
-                                        <li>
-                                            <div class="d-flex align-items-center cursor-pointer">
-                                                <div class="color-indigator bg-black"></div>
-                                                <p class="mb-0 ms-3">Черный</p>
+                                        <ul class="list-unstyled mb-0 categories-list">
+                                            {% for color in colors %}
+                                            <li>
+                                                <div class="d-flex align-items-center cursor-pointer">
+                                                <div class="pe-3"><input class="form-check-input"  type="checkbox" name="color" value="{{ color }}"></div>
+                                                <div class="color-indigator border border-black border-1" style="background-color: {{ color.tag }}" ></div>
+                                                <p class="mb-0 ms-3">{{ color }}</p>
                                             </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex align-items-center cursor-pointer">
-                                                <div class="color-indigator bg-warning"></div>
-                                                <p class="mb-0 ms-3">Желтый</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex align-items-center cursor-pointer">
-                                                <div class="color-indigator bg-danger"></div>
-                                                <p class="mb-0 ms-3">Красный</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex align-items-center cursor-pointer">
-                                                <div class="color-indigator bg-primary"></div>
-                                                <p class="mb-0 ms-3">Синий</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex align-items-center cursor-pointer">
-                                                <div class="color-indigator bg-white"></div>
-                                                <p class="mb-0 ms-3">Белый</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex align-items-center cursor-pointer">
-                                                <div class="color-indigator bg-success"></div>
-                                                <p class="mb-0 ms-3">Зеленый</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex align-items-center cursor-pointer">
-                                                <div class="color-indigator bg-info"></div>
-                                                <p class="mb-0 ms-3">Небесно-голубой</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                <hr>
+                                    <div class="d-grid gap-2">
+                                        <input type="submit" class="btn btn-outline-primary" value="Показать">
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
