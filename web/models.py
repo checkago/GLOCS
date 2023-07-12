@@ -95,12 +95,24 @@ class Brand(models.Model):
         return self.name
 
 
+class Size(models.Model):
+    name = models.CharField(max_length=2, verbose_name='Название')
+
+    class Meta:
+        verbose_name = 'Размер'
+        verbose_name_plural = 'Размеры'
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     type = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Вид обуви')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Категория')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
     color = models.ForeignKey('Color', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Цвет')
-    size = models.CharField(max_length=150, verbose_name='Размеры', blank=True, null=True)
+    size = models.ManyToManyField(Size, blank=True, null=True, verbose_name='Размеры')
+    sort = models.FloatField(unique=True, blank=True, null=True, verbose_name='Очередь сортировки')
     wb_link = models.URLField(verbose_name='Ссылка на маркетплейс', null=True, blank=True)
     featured = models.BooleanField(default=False, verbose_name='Виден в рекомендуемых')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
@@ -123,7 +135,8 @@ class Product(models.Model):
 
 class Color(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название')
-    tag = models.CharField(max_length=10, verbose_name='Тег цвета')
+    tag = models.CharField(max_length=50, blank=True, verbose_name='Тег цвета')
+    multycolor = models.BooleanField(default=False, verbose_name='Мультиколор')
 
     class Meta:
         verbose_name = 'Цвет'

@@ -957,6 +957,21 @@ ul.categories-list li {
 .bg-gradient-moonlit {
 	background: linear-gradient(to right, #0f2027, #203a43, #2c5364)!important
 }
+.gradient-blue-white-fuksiya {
+	background: linear-gradient(to right, #75e1fd, #FFFFFF, #ff00bf)!important
+}
+.gradient-white-orange {
+	background: linear-gradient(to right, #FFFFFF, #ffa500)!important
+}
+.gradient-white-rose {
+	background: linear-gradient(to right, #FFFFFF, #ff8fa2)!important
+}
+.gradient-white-black {
+	background: linear-gradient(to right, #FFFFFF, #000000)!important
+}
+.gradient-yellow-rose-myatny {
+	background: linear-gradient(to right, #fde910, #ff8fa2, #1cd3a2)!important
+}
 .split-bg-primary {
 	background-color: #0c62e0;
 	border-color: #0c62e0

@@ -9,20 +9,24 @@ from web.models import *
 class IndexView(views.View):
 
     def get(self, request, *args, **kwargs):
-        title = 'ALLSHOES'
+        title = 'GLOCS'
         meta_description = 'Описание'
         brands = Brand.objects.all()
         categories = Category.objects.all()
         sliders = Banner.objects.all()
         products = Product.objects.all()
-        featured = Product.objects.filter(featured=True)
+        featured = Product.objects.filter(featured=True).order_by('sort')
         contact_data = Organization.objects.filter(active=True)
+        sabo = Product.objects.filter(type__name='Сабо')
+        shlyopki = Product.objects.filter(type__name='Шлепки')
         context = {
             'title': title,
             'meta_description': meta_description,
             'brands': brands,
             'categories': categories,
             'products': products,
+            'sabo': sabo,
+            'shlyopki': shlyopki,
             'sliders': sliders,
             'featured': featured,
             'contact_data': contact_data
@@ -45,75 +49,35 @@ def contact(request):
     return render(request, 'contacts.html', {'title': title, 'description': description, 'contact_data': contact_data})
 
 
-class CategoryView(views.View):
-    model = Category
-
+class CatalogView(views.View):
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
-        products = Product.objects.all()
+        types = Type.objects.all()
+        colors = Color.objects.all()
         brands = Brand.objects.all()
+        products = Product.objects.all()
+        brands_selected = request.GET.getlist('brands')
+        categories_selected = request.GET.getlist('category')
+        types_selected = request.GET.getlist('type')
+        colors_selected = request.GET.getlist('color')
+        if brands_selected:
+            products = products.filter(brand__name__in=brands_selected)
+        if categories_selected:
+            products = products.filter(category__name__in=categories_selected)
+        if types_selected:
+            products = products.filter(type__name__in=types_selected)
+        if colors_selected:
+            products = products.filter(color__name__in=colors_selected)
+        image = ImageGallery.objects.filter(id=1, content_type=ContentType.objects.get_for_model(Product))
         context = {
             'categories': categories,
+            'types': types,
+            'colors': colors,
             'products': products,
             'brands': brands,
-        }
-        return render(request, 'category_detail.html', context)
-
-
-class BrandGlocsView(views.View):
-    def get(self, request, *args, **kwargs):
-        categories = Category.objects.all()
-        types = Type.objects.all()
-        colors = Color.objects.all()
-        brand = Brand.objects.get(id='1')
-        products = Product.objects.filter(brand=brand)
-        categories_selected = request.GET.getlist('category')
-        types_selected = request.GET.getlist('type')
-        colors_selected = request.GET.getlist('color')
-        if categories_selected:
-            products = products.filter(category__name__in=categories_selected)
-        if types_selected:
-            products = products.filter(type__name__in=types_selected)
-        if colors_selected:
-            products = products.filter(color__name__in=colors_selected)
-        image = ImageGallery.objects.filter(id=1, content_type=ContentType.objects.get_for_model(Product))
-        context = {
-            'categories': categories,
-            'types': types,
-            'colors': colors,
-            'products': products,
-            'brand': brand,
             'image': image
         }
-        return render(request, 'brand.html', context)
-
-
-class BrandSunriseView(views.View):
-    def get(self, request, *args, **kwargs):
-        categories = Category.objects.all()
-        types = Type.objects.all()
-        colors = Color.objects.all()
-        brand = Brand.objects.get(id='2')
-        products = Product.objects.filter(brand=brand)
-        categories_selected = request.GET.getlist('category')
-        types_selected = request.GET.getlist('type')
-        colors_selected = request.GET.getlist('color')
-        if categories_selected:
-            products = products.filter(category__name__in=categories_selected)
-        if types_selected:
-            products = products.filter(type__name__in=types_selected)
-        if colors_selected:
-            products = products.filter(color__name__in=colors_selected)
-        image = ImageGallery.objects.filter(id=1, content_type=ContentType.objects.get_for_model(Product))
-        context = {
-            'categories': categories,
-            'types': types,
-            'colors': colors,
-            'products': products,
-            'brand': brand,
-            'image': image
-        }
-        return render(request, 'brand.html', context)
+        return render(request, 'catalog.html', context)
 
 
 class ProductDetailView(DetailView):
@@ -124,5 +88,6 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = Product.objects.all()
+        context['sizes'] = self.object.size.all()
         return context
 

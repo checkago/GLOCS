@@ -53,6 +53,11 @@ class ColorAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
+@admin.register(Size)
+class SizeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = ('name',)

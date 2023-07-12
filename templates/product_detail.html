@@ -45,8 +45,15 @@
                                 <div class="product-info-section p-3">
                                     <h3 class="mt-3 mt-lg-0 mb-0">{{ product }}</h3>
                                     <div class="mt-3">
-                                        <h6>Цвет :</h6>
+                                        <h6><strong>Цвет :</strong></h6>
                                         {{ product.color }}
+                                    </div>
+                                    <div class="mt-3">
+                                        <h6>Размеры :</h6>
+                                          {% for size in sizes %}
+                                              <span class="font-14">{{ size }}
+                                                  {% if not forloop.last %},{% endif %}</span>
+                                          {% endfor %}
                                     </div>
                                     <div class="mt-3">
                                         <h6>Описание :</h6>

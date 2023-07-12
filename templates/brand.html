@@ -37,6 +37,21 @@
                             <div class="card-body">
 
                                 <form method="get">
+
+                                    <div class="product-categories">
+                                        <h6 class="text-uppercase mb-3">Бренд</h6>
+                                        <ul class="list-unstyled mb-0 categories-list">
+                                            {% for brand in brands %}
+                                            <li>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="brands" value="{{ brand }}">
+                                                    <label class="form-check-label" for="{{ brand }}">{{ brand }}</label>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <hr>
                                     <div class="product-categories">
                                         <h6 class="text-uppercase mb-3">ВИД ОБУВИ</h6>
                                         <ul class="list-unstyled mb-0 categories-list">
@@ -50,7 +65,7 @@
                                             {% endfor %}
                                         </ul>
                                     </div>
-                                <hr>
+                                    <hr>
                                     <div class="product-categories">
                                     <h6 class="text-uppercase mb-3">Категория</h6>
                                         <ul class="list-unstyled mb-0 categories-list">
@@ -71,10 +86,10 @@
                                             {% for color in colors %}
                                             <li>
                                                 <div class="d-flex align-items-center cursor-pointer">
-                                                <div class="pe-3"><input class="form-check-input"  type="checkbox" name="color" value="{{ color }}"></div>
-                                                <div class="color-indigator border border-black border-1" style="background-color: {{ color.tag }}" ></div>
-                                                <p class="mb-0 ms-3">{{ color }}</p>
-                                            </div>
+                                                    <div class="pe-3"><input class="form-check-input"  type="checkbox" name="color" value="{{ color }}"></div>
+                                                    <div class="color-indigator border border-black border-1" style="background-color: {{ color.tag }}" ></div>
+                                                    <p class="mb-0 ms-3">{{ color }}</p>
+                                                </div>
                                             </li>
                                             {% endfor %}
                                         </ul>
@@ -106,6 +121,9 @@
                       <div class="col">
                         <div class="card border shadow-none">
                           <div class="position-relative overflow-hidden">
+                            <div class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
+                              <a href="{{ Product.wb_link }}"><i class="bi bi-basket3"></i></a>
+                            </div>
                             <a href="{% url 'product-detail' Product.pk %}">
                                 {% for image in Product.image_gallery.all|slice:"2:3" %}
                                     <img src="{{ image.image.url }}" class="card-img-top"   alt="First Image">
@@ -122,7 +140,7 @@
                             <p>Нет доступных товаров.</p>
                         {% endfor %}
                   </div><!--end row-->
-                </div>
+                  </div>
 
                 </div>
               </div>
@@ -130,10 +148,6 @@
         </div>
       </section>
        <!--start product details-->
-
-
-
-
      </div>
       <!--end page content-->
 
