@@ -25,10 +25,11 @@ class ProductAdminForm(forms.ModelForm):
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ImageGalleryInline]
     form = ProductAdminForm
-    list_display = ('combined_fields',)
+    list_display = ('combined_fields', 'featured', 'sort',)
+    list_filter = ['type', 'category', 'brand', 'djibits']
 
     def combined_fields(self, obj):
-        return f"{obj.type} {obj.category} {obj.brand}, цвет {obj.color}"
+        return f"{obj.type} {obj.category} {obj.brand} {obj.djibits}, цвет {obj.color}"
 
     combined_fields.short_description = 'Combined Fields'
 
@@ -50,6 +51,11 @@ class TypeAdmin(admin.ModelAdmin):
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+@admin.register(Djibits)
+class DjibitsAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 

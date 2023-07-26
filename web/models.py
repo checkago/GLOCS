@@ -106,10 +106,22 @@ class Size(models.Model):
         return self.name
 
 
+class Djibits(models.Model):
+    name = models.CharField(max_length=15, verbose_name='Название')
+
+    class Meta:
+        verbose_name = 'Опция'
+        verbose_name_plural = 'Опции'
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     type = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Вид обуви')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Категория')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
+    djibits = models.ForeignKey(Djibits, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Опции')
     color = models.ForeignKey('Color', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Цвет')
     size = models.ManyToManyField(Size, blank=True, verbose_name='Размеры')
     sort = models.FloatField(unique=True, blank=True, null=True, verbose_name='Очередь сортировки')

@@ -15,9 +15,11 @@ class IndexView(views.View):
         categories = Category.objects.all()
         sliders = Banner.objects.all()
         products = Product.objects.all()
+        exclusive = Product.objects.filter(color__multycolor=True)
+        accessories = Product.objects.filter(djibits__isnull=False)
         featured = Product.objects.filter(featured=True).order_by('sort')
         contact_data = Organization.objects.filter(active=True)
-        sabo = Product.objects.filter(type__name='Сабо')
+        sabo = Product.objects.filter(type__name='Сабо').exclude(color__multycolor=True).exclude(djibits__isnull=False)
         shlyopki = Product.objects.filter(type__name='Шлепки')
         context = {
             'title': title,
@@ -29,7 +31,9 @@ class IndexView(views.View):
             'shlyopki': shlyopki,
             'sliders': sliders,
             'featured': featured,
-            'contact_data': contact_data
+            'contact_data': contact_data,
+            'exclusive': exclusive,
+            'accessories': accessories
         }
         return render(request, 'index.html', context)
 
