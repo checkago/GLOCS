@@ -111,7 +111,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Категория')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
     color = models.ForeignKey('Color', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Цвет')
-    size = models.ManyToManyField(Size, blank=True, null=True, verbose_name='Размеры')
+    size = models.ManyToManyField(Size, blank=True, verbose_name='Размеры')
     sort = models.FloatField(unique=True, blank=True, null=True, verbose_name='Очередь сортировки')
     wb_link = models.URLField(verbose_name='Ссылка на маркетплейс', null=True, blank=True)
     featured = models.BooleanField(default=False, verbose_name='Виден в рекомендуемых')
