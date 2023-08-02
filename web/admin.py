@@ -7,14 +7,23 @@ from django.contrib.contenttypes.admin import GenericTabularInline
 from .models import *
 
 
+
+
 class ImageGalleryInline(GenericTabularInline):
     model = ImageGallery
     readonly_fields = ('image_url',)
 
 
+def dublicate_product(modeladmin, request, queryset):
+    #клонирование выбранных Product
+    for product in queryset:
+        product.pk = None
+        product.save()
+
+dublicate_product.short_description = "Дублировать объект"
+
 class ProductAdminForm(forms.ModelForm):
     description = forms.CharField(widget=CKEditorUploadingWidget(config_name='awesome_ckeditor'), required=False)
-
     class Meta:
         verbose_name = 'Текст'
         model = Product
@@ -23,6 +32,7 @@ class ProductAdminForm(forms.ModelForm):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    actions = [dublicate_product]
     inlines = [ImageGalleryInline]
     form = ProductAdminForm
     list_display = ('combined_fields', 'featured', 'sort',)
@@ -68,6 +78,10 @@ class SizeAdmin(admin.ModelAdmin):
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
+
+@admin.register(BannerColor)
+class BannerColorAdmin(admin.ModelAdmin):
+    list_display = ('name',)
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):

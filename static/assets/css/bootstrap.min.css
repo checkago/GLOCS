@@ -6456,6 +6456,15 @@ textarea.form-control-lg {
 .start-0 {
 	left: 0!important
 }
+.start-15 {
+	left: 15%!important
+}
+.start-25 {
+	left: 25%!important
+}
+.start-35 {
+	left: 35%!important
+}
 .start-50 {
 	left: 50%!important
 }

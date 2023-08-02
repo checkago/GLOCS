@@ -158,13 +158,28 @@ class Color(models.Model):
         return self.name
 
 
+class BannerColor(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Название')
+    tag = models.CharField(max_length=50, blank=True, verbose_name='Тег цвета')
+
+    class Meta:
+        verbose_name = 'Цвет фона слайдера'
+        verbose_name_plural = 'Фоновое цвета для слайдера'
+
+    def __str__(self):
+        return self.name
+
+
 class Banner(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название баннера')
-    image = models.ImageField(upload_to='media/banners', verbose_name='Изображение')
+    bg_color = models.ForeignKey(BannerColor, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Цвет фона')
+    image_desktop = models.ImageField(upload_to='media/banners', null=True, blank=True, verbose_name='Изображение')
+    image_mobile = models.ImageField(upload_to='media/banners', null=True, blank=True, verbose_name='Изображение')
     active = models.BooleanField(default=True, verbose_name='Показывать на главной')
-    title = models.CharField(max_length=150, verbose_name='Заголовок', null=True)
-    description = models.TextField(verbose_name='Описание', null=True)
-    link = models.URLField(verbose_name='Ссылка', null=True)
+    title = models.CharField(max_length=150, verbose_name='Заголовок', blank=True, null=True)
+    subtitle = models.CharField(max_length=250, verbose_name='Подзаголовок', blank=True, null=True)
+    description = models.TextField(verbose_name='Описание', blank=True, null=True)
+    link = models.URLField(verbose_name='Ссылка', blank=True, null=True)
     button_name = models.CharField(max_length=20, verbose_name='Название кнопки', default='Подробнее')
 
     class Meta:
