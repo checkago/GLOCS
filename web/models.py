@@ -172,9 +172,12 @@ class BannerColor(models.Model):
 
 class Banner(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название баннера')
-    bg_color = models.ForeignKey(BannerColor, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Цвет фона')
-    image_desktop = models.ImageField(upload_to='media/banners', null=True, blank=True, verbose_name='Изображение')
-    image_mobile = models.ImageField(upload_to='media/banners', null=True, blank=True, verbose_name='Изображение')
+    bg_color = models.ForeignKey(BannerColor, on_delete=models.SET_NULL, blank=True, null=True,
+                                 verbose_name='Цвет фона')
+    image_desktop = models.ImageField(upload_to='media/banners', null=True, blank=True,
+                                      verbose_name='Изображение для ПК')
+    image_mobile = models.ImageField(upload_to='media/banners', null=True, blank=True,
+                                     verbose_name='Изображение для МОБ')
     active = models.BooleanField(default=True, verbose_name='Показывать на главной')
     title = models.CharField(max_length=150, verbose_name='Заголовок', blank=True, null=True)
     subtitle = models.CharField(max_length=250, verbose_name='Подзаголовок', blank=True, null=True)
