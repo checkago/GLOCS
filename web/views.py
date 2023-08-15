@@ -48,7 +48,7 @@ def about(request):
 def contact(request):
     title = 'Контакты'
     description = 'Описание страницы'
-    contact_data = Organization.objects.filter(name='Санрайз')
+    contact_data = Organization.objects.all()
 
     return render(request, 'contacts.html', {'title': title, 'description': description, 'contact_data': contact_data})
 
