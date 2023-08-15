@@ -23,7 +23,10 @@
                 <div class="row d-flex align-items-center">
                   <div id="image" class="col position-relative">
                     <img src="{{ Banner.image_desktop.url }}" class="w-100 desktop-image" alt="...">
+                      {% if Banner.image_mobile %}
                     <img src="{{ Banner.image_mobile.url }}" class="img-fluid w-100 mobile-image" alt="...">
+                      {% else %}
+                      {% endif %}
                   </div>
                   <div id="text" class="col d-none d-md-flex justify-content-start align-items-center position-absolute top-50 start-15 translate-middle-y">
                     <div class="">
