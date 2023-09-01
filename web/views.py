@@ -1,5 +1,4 @@
-from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django import views
 from django.views.generic import DetailView
 
@@ -53,6 +52,9 @@ def contact(request):
     return render(request, 'contacts.html', {'title': title, 'description': description, 'contact_data': contact_data})
 
 
+from django.core.paginator import Paginator
+
+
 class CatalogView(views.View):
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
@@ -72,12 +74,18 @@ class CatalogView(views.View):
             products = products.filter(type__name__in=types_selected)
         if colors_selected:
             products = products.filter(color__name__in=colors_selected)
+
+        # Создание объекта Paginator с 27 товарами на страницу
+        paginator = Paginator(products, 28)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         image = ImageGallery.objects.filter(id=1, content_type=ContentType.objects.get_for_model(Product))
         context = {
             'categories': categories,
             'types': types,
             'colors': colors,
-            'products': products,
+            'products': page_obj,  # Передача объекта страницы вместо всех товаров
             'brands': brands,
             'image': image
         }
@@ -92,6 +100,6 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = Product.objects.all()
-        context['sizes'] = self.object.size.all()
+        context['sizes'] = self.object.size.all().order_by('name')
         return context
 

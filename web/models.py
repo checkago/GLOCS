@@ -94,7 +94,7 @@ class Brand(models.Model):
 
 
 class Size(models.Model):
-    name = models.CharField(max_length=2, verbose_name='Название')
+    name = models.CharField(max_length=5, verbose_name='Название')
 
     class Meta:
         verbose_name = 'Размер'

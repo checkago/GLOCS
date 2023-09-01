@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.contrib import admin
 from django import forms
@@ -15,15 +17,36 @@ class ImageGalleryInline(GenericTabularInline):
 
 
 def dublicate_product(modeladmin, request, queryset):
-    #клонирование выбранных Product
     for product in queryset:
-        product.pk = None
-        product.save()
+        # Создание копии объекта Product
+        duplicate_product = deepcopy(product)
+        duplicate_product.pk = None
+        duplicate_product.save()
+
+        # Копирование связанных данных
+        for size in product.size.all():
+            duplicate_product.size.add(size)
+
+        # Копирование других связанных полей
+        duplicate_product.type = product.type
+        duplicate_product.category = product.category
+        duplicate_product.brand = product.brand
+        duplicate_product.djibits = product.djibits
+        duplicate_product.color = product.color
+        duplicate_product.sort = product.sort
+        duplicate_product.wb_link = product.wb_link
+        duplicate_product.featured = product.featured
+        duplicate_product.description = product.description
+
+        # Сохранение копии объекта Product
+        duplicate_product.save()
 
 dublicate_product.short_description = "Дублировать объект"
 
+
 class ProductAdminForm(forms.ModelForm):
     description = forms.CharField(widget=CKEditorUploadingWidget(config_name='awesome_ckeditor'), required=False)
+
     class Meta:
         verbose_name = 'Текст'
         model = Product
