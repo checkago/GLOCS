@@ -52,7 +52,7 @@ def contact(request):
     return render(request, 'contacts.html', {'title': title, 'description': description, 'contact_data': contact_data})
 
 
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class CatalogView(views.View):
@@ -78,7 +78,12 @@ class CatalogView(views.View):
         # Создание объекта Paginator с 27 товарами на страницу
         paginator = Paginator(products, 28)
         page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+        try:
+            page_obj = paginator.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.get_page(1)
+        except EmptyPage:
+            page_obj = paginator.get_page(paginator.num_pages)
 
         image = ImageGallery.objects.filter(id=1, content_type=ContentType.objects.get_for_model(Product))
         context = {
@@ -87,6 +92,8 @@ class CatalogView(views.View):
             'colors': colors,
             'products': page_obj,  # Передача объекта страницы вместо всех товаров
             'brands': brands,
+            'paginator': paginator,
+            'page_obj': page_obj,
             'image': image
         }
         return render(request, 'catalog.html', context)
