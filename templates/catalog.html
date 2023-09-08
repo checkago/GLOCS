@@ -85,6 +85,20 @@
                                      </div>
                                     <hr>
                                     <div class="category">
+                                        <h6 class="p-1 fw-bold bg-light">ОПЦИИ</h6>
+                                         <div class="category-wrapper p-1">
+                                             {% for djibits in djibitss %}
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{ djibits }}" name="djibits">
+                                                <label class="form-check-label" for="{{ djibits }}">
+                                                  <span>{{ djibits }}</span>
+                                                </label>
+                                            </div>
+                                             {% endfor %}
+                                         </div>
+                                     </div>
+                                    <hr>
+                                    <div class="category">
                                     <h6 class="p-1 fw-bold bg-light">ЦВЕТ</h6>
                                      <div class="category-wrapper height-1 p-1">
                                          <ul class="list-unstyled mb-0 categories-list">
@@ -149,34 +163,31 @@
 
                 <div class="product-grid mt-4">
 
-                    {% if products.has_other_pages %}
-                    <nav aria-label="Page navigation example pt-3">
-                      <ul class="pagination justify-content-center">
-                       {% if page_obj.has_previous %}
-                           <li class="page-item">
-                             <a class="page-link bg-yellow2" href="?page=1">Начало</a>
-                           </li>
-
-                        {% endif %}
-                        {% for p in paginator.page_range %}
-                              {% if page_obj.number == p %}
-                                <li class="page-item active" aria-current="page">
-                                  <a class="page-link" href="#">{{ p }} <span class="visually-hidden"></span></a>
-                                </li>
-                              {% elif p >= page_obj.number|add:-4 and p <= page_obj.number|add:4 %}
-                                <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-                              {% endif %}
-                        {% endfor %}
-                        {% if page_obj.has_next %}
-
-                            <li class="page-item">
-                              <a class="page-link bg-yellow2" href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
-                            </li>
-                        {% endif %}
-                      </ul>
-                    </nav>
-                    <hr>
-                {% endif %}
+                    {% if page_obj.has_other_pages %}
+                        <nav aria-label="Page navigation example pt-3">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link bg-yellow2" href="?page=1{% for brand in brands_selected %}&brands={{ brand|stringformat:"s" }}{% endfor %}{% for category in categories_selected %}&category={{ category|stringformat:"s" }}{% endfor %}{% for type in types_selected %}&type={{ type|stringformat:"s" }}{% endfor %}{% for color in colors_selected %}&color={{ color|stringformat:"s" }}{% endfor %}{% for djibit in djibits_selected %}&djibits={{ djibit|stringformat:"s" }}{% endfor %}">Начало</a>
+                                    </li>
+                                {% endif %}
+                                {% for p in paginator.page_range %}
+                                    {% if page_obj.number == p %}
+                                        <li class="page-item active" aria-current="page">
+                                            <a class="page-link" href="#">{{ p }} <span class="visually-hidden">(текущая страница)</span></a>
+                                        </li>
+                                    {% elif p >= page_obj.number|add:-4 and p <= page_obj.number|add:4 %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ p }}{% for brand in brands_selected %}&brands={{ brand|stringformat:"s" }}{% endfor %}{% for category in categories_selected %}&category={{ category|stringformat:"s" }}{% endfor %}{% for type in types_selected %}&type={{ type|stringformat:"s" }}{% endfor %}{% for color in colors_selected %}&color={{ color|stringformat:"s" }}{% endfor %}{% for djibit in djibits_selected %}&djibits={{ djibit|stringformat:"s" }}{% endfor %}">{{ p }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link bg-yellow2" href="?page={{ page_obj.paginator.num_pages }}{% for brand in brands_selected %}&brands={{ brand|stringformat:"s" }}{% endfor %}{% for category in categories_selected %}&category={{ category|stringformat:"s" }}{% endfor %}{% for type in types_selected %}&type={{ type|stringformat:"s" }}{% endfor %}{% for color in colors_selected %}&color={{ color|stringformat:"s" }}{% endfor %}{% for djibit in djibits_selected %}&djibits={{ djibit|stringformat:"s" }}{% endfor %}">Последняя</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
 
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                         {% for Product in products %}
@@ -184,7 +195,7 @@
                                 <div class="card border shadow-none">
                                     <div class="position-relative overflow-hidden">
                                         <div class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                                            <a href="{{ Product.wb_link }}"><i class="bi bi-basket3"></i></a>
+                                            <a href="{% url 'product-detail' Product.pk %}"><i class="bi bi-basket3"></i></a>
                                         </div>
                                         <a href="{% url 'product-detail' Product.pk %}">
                                             {% for image in Product.image_gallery.all|slice:"2:3" %}
@@ -207,38 +218,37 @@
                         {% endfor %}
                     </div><!--end row-->
                 </div>
-                {% if products.has_other_pages %}
-                <hr>
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                   {% if page_obj.has_previous %}
-                       <li class="page-item">
-                         <a class="page-link bg-yellow2" href="?page=1">Начало</a>
-                       </li>
-
-                    {% endif %}
-                    {% for p in paginator.page_range %}
-                          {% if page_obj.number == p %}
-                            <li class="page-item active" aria-current="page">
-                              <a class="page-link" href="#">{{ p }} <span class="visually-hidden"></span></a>
-                            </li>
-                          {% elif p >= page_obj.number|add:-4 and p <= page_obj.number|add:4 %}
-                            <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-                          {% endif %}
-                    {% endfor %}
-                    {% if page_obj.has_next %}
-
-                        <li class="page-item">
-                          <a class="page-link bg-yellow2" href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
-                        </li>
-                    {% endif %}
-                  </ul>
-                </nav>
+                {% if page_obj.has_other_pages %}
+                    <hr>
+                    <nav aria-label="Page navigation example pt-3">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link bg-yellow2" href="?page=1{% for brand in brands_selected %}&brands={{ brand|stringformat:"s" }}{% endfor %}{% for category in categories_selected %}&category={{ category|stringformat:"s" }}{% endfor %}{% for type in types_selected %}&type={{ type|stringformat:"s" }}{% endfor %}{% for color in colors_selected %}&color={{ color|stringformat:"s" }}{% endfor %}{% for djibit in djibits_selected %}&djibits={{ djibit|stringformat:"s" }}{% endfor %}">Начало</a>
+                                </li>
+                            {% endif %}
+                            {% for p in paginator.page_range %}
+                                {% if page_obj.number == p %}
+                                    <li class="page-item active" aria-current="page">
+                                        <a class="page-link" href="#">{{ p }} <span class="visually-hidden">(текущая страница)</span></a>
+                                    </li>
+                                {% elif p >= page_obj.number|add:-4 and p <= page_obj.number|add:4 %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ p }}{% for brand in brands_selected %}&brands={{ brand|stringformat:"s" }}{% endfor %}{% for category in categories_selected %}&category={{ category|stringformat:"s" }}{% endfor %}{% for type in types_selected %}&type={{ type|stringformat:"s" }}{% endfor %}{% for color in colors_selected %}&color={{ color|stringformat:"s" }}{% endfor %}{% for djibit in djibits_selected %}&djibits={{ djibit|stringformat:"s" }}{% endfor %}">{{ p }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link bg-yellow2" href="?page={{ page_obj.paginator.num_pages }}{% for brand in brands_selected %}&brands={{ brand|stringformat:"s" }}{% endfor %}{% for category in categories_selected %}&category={{ category|stringformat:"s" }}{% endfor %}{% for type in types_selected %}&type={{ type|stringformat:"s" }}{% endfor %}{% for color in colors_selected %}&color={{ color|stringformat:"s" }}{% endfor %}{% for djibit in djibits_selected %}&djibits={{ djibit|stringformat:"s" }}{% endfor %}">Последняя</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                 {% endif %}
               </div>
            </div><!--end row-->
         </div>
-      </section>
+        </div>
+        </section>
        <!--start product details-->
 
 

@@ -62,10 +62,12 @@ class CatalogView(views.View):
         colors = Color.objects.all()
         brands = Brand.objects.all()
         products = Product.objects.all()
+        djibitss = Djibits.objects.all()
         brands_selected = request.GET.getlist('brands')
         categories_selected = request.GET.getlist('category')
         types_selected = request.GET.getlist('type')
         colors_selected = request.GET.getlist('color')
+        djibits_selected = request.GET.getlist('djibits')
         if brands_selected:
             products = products.filter(brand__name__in=brands_selected)
         if categories_selected:
@@ -74,8 +76,9 @@ class CatalogView(views.View):
             products = products.filter(type__name__in=types_selected)
         if colors_selected:
             products = products.filter(color__name__in=colors_selected)
+        if djibits_selected:
+            products = products.filter(djibits__name__in=djibits_selected)
 
-        # Создание объекта Paginator с 27 товарами на страницу
         paginator = Paginator(products, 28)
         page_number = request.GET.get('page')
         try:
@@ -84,17 +87,22 @@ class CatalogView(views.View):
             page_obj = paginator.get_page(1)
         except EmptyPage:
             page_obj = paginator.get_page(paginator.num_pages)
-
         image = ImageGallery.objects.filter(id=1, content_type=ContentType.objects.get_for_model(Product))
         context = {
             'categories': categories,
             'types': types,
             'colors': colors,
-            'products': page_obj,  # Передача объекта страницы вместо всех товаров
+            'products': page_obj,
             'brands': brands,
+            'djibitss': djibitss,
             'paginator': paginator,
             'page_obj': page_obj,
-            'image': image
+            'image': image,
+            'brands_selected': brands_selected,
+            'categories_selected': categories_selected,
+            'types_selected': types_selected,
+            'colors_selected': colors_selected,
+            'djibits_selected': djibits_selected,
         }
         return render(request, 'catalog.html', context)
 
