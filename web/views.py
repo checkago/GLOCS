@@ -62,7 +62,7 @@ class CatalogView(views.View):
         types = Type.objects.all()
         colors = Color.objects.all()
         brands = Brand.objects.all()
-        products = Product.objects.all()
+        products = Product.objects.all().order_by('?')
         djibitss = Djibits.objects.all()
         brands_selected = request.GET.getlist('brands')
         categories_selected = request.GET.getlist('category')
