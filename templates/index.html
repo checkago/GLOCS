@@ -155,7 +155,7 @@
           </div>
           <div class="tab-pane fade" id="best-sellar">
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-4">
-              {% for Product in shlyopki %}
+              {% for Product in shlyopki|slice:"20" %}
               <div class="col">
                 <div class="card">
                   <div class="position-relative overflow-hidden">
@@ -213,7 +213,7 @@
           </div>
           <div class="tab-pane fade" id="special-offer">
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-4">
-              {% for Product in accessories %}
+              {% for Product in accessories|slice:"15" %}
               <div class="col">
                 <div class="card">
                   <div class="position-relative overflow-hidden">

@@ -15,7 +15,8 @@ class IndexView(views.View):
         sliders = Banner.objects.all()
         products = Product.objects.all()
         exclusive = Product.objects.filter(color__multycolor=True)
-        accessories = Product.objects.filter(djibits__isnull=False)
+        excluded_names = ['Кайма', 'Высокие', 'Низкие', 'Вкладыш']
+        accessories = Product.objects.filter(djibits__isnull=False).exclude(djibits__name__in=excluded_names)
         featured = Product.objects.filter(featured=True).order_by('sort')
         contact_data = Organization.objects.filter(active=True)
         sabo = Product.objects.filter(type__name='Сабо').exclude(color__multycolor=True).exclude(djibits__isnull=False)
