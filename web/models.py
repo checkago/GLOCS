@@ -115,10 +115,22 @@ class Djibits(models.Model):
         return self.name
 
 
+class Model(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Название')
+
+    class Meta:
+        verbose_name = 'Модель'
+        verbose_name_plural = 'Модели'
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     type = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Вид обуви')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Категория')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
+    model = models.ForeignKey(Model, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Модель')
     djibits = models.ForeignKey(Djibits, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Опции')
     color = models.ForeignKey('Color', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Цвет')
     size = models.ManyToManyField(Size, blank=True, verbose_name='Размеры')
@@ -133,7 +145,10 @@ class Product(models.Model):
         verbose_name_plural = 'Товары'
 
     def __str__(self):
-        return f"{self.type} {self.category} {self.brand}"
+        if self.model:
+            return f"{self.type} {self.category} {self.model} {self.brand}"
+        else:
+            return f"{self.type} {self.category} {self.brand}"
 
     @property
     def ct_model(self):
