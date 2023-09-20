@@ -62,15 +62,19 @@ class CatalogView(views.View):
         types = Type.objects.all()
         colors = Color.objects.all()
         brands = Brand.objects.all()
+        models = Model.objects.all()
         products = Product.objects.all().order_by('?')
         djibitss = Djibits.objects.all()
         brands_selected = request.GET.getlist('brands')
+        models_selected = request.GET.getlist('model')
         categories_selected = request.GET.getlist('category')
         types_selected = request.GET.getlist('type')
         colors_selected = request.GET.getlist('color')
         djibits_selected = request.GET.getlist('djibits')
         if brands_selected:
             products = products.filter(brand__name__in=brands_selected)
+        if models_selected:
+            products = products.filter(model__name__in=models_selected)
         if categories_selected:
             products = products.filter(category__name__in=categories_selected)
         if types_selected:
@@ -100,6 +104,8 @@ class CatalogView(views.View):
             'page_obj': page_obj,
             'image': image,
             'brands_selected': brands_selected,
+            'models': models,
+            'models_selected': models_selected,
             'categories_selected': categories_selected,
             'types_selected': types_selected,
             'colors_selected': colors_selected,

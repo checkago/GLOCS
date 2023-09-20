@@ -85,6 +85,20 @@
                                      </div>
                                     <hr>
                                     <div class="category">
+                                        <h6 class="p-1 fw-bold bg-light">МОДЕЛЬ</h6>
+                                         <div class="category-wrapper p-1">
+                                             {% for model in models %}
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{ model }}" name="model">
+                                                <label class="form-check-label" for="{{ model }}">
+                                                  <span>{{ model }}</span>
+                                                </label>
+                                            </div>
+                                             {% endfor %}
+                                         </div>
+                                     </div>
+                                    <hr>
+                                    <div class="category">
                                         <h6 class="p-1 fw-bold bg-light">ОПЦИИ</h6>
                                          <div class="category-wrapper p-1">
                                              {% for djibits in djibitss %}
