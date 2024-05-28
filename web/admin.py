@@ -58,7 +58,7 @@ class ProductAdmin(admin.ModelAdmin):
     actions = [dublicate_product]
     inlines = [ImageGalleryInline]
     form = ProductAdminForm
-    list_display = ('combined_fields', 'featured', 'sort',)
+    list_display = ('combined_fields', 'featured', 'sort', 'wb_link',)
     list_filter = ['type', 'category', 'brand', 'model', 'djibits']
 
     def combined_fields(self, obj):
