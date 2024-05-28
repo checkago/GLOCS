@@ -23,10 +23,10 @@
                 <div class="row d-flex align-items-center">
                   <div id="image" class="col position-relative">
                     <img src="{{ Banner.image_desktop.url }}" class="w-100 desktop-image" alt="...">
-                      {% if Banner.image_mobile %}
+                  {% if Banner.image_mobile %}
                     <img src="{{ Banner.image_mobile.url }}" class="img-fluid w-100 mobile-image" alt="...">
-                      {% else %}
-                      {% endif %}
+                  {% else %}
+                  {% endif %}
                   </div>
                   <div id="text" class="col d-none d-md-flex justify-content-start align-items-center position-absolute top-50 start-15 translate-middle-y">
                     <div class="">
@@ -56,7 +56,7 @@
 
 
     <!--start Featured Products slider-->
-    <section class="section-padding">
+    <section class="section-padding bg-light">
       <div class="container">
         <div class="text-center pb-3">
           <h3 class="mb-0 h3 fw-bold">Рекомендуемые товары</h3>
@@ -89,6 +89,21 @@
     </section>
     <!--end Featured Products slider-->
 
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <img class="img-fluid" src="{% static 'assets/images/foto_2.webp' %}">
+                </div>
+                <div class="col-lg-4">
+                    <img class="img-fluid" src="{% static 'assets/images/foto_1.webp' %}">
+                </div>
+                <div class="col-lg-4">
+                    <img class="img-fluid" src="{% static 'assets/images/foto_3.webp' %}">
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!--start tabular product-->
     <section class="product-tab-section section-padding bg-light">
@@ -349,97 +364,18 @@
           <h3 class="mb-0 h3 fw-bold">Наши партнеры</h3>
         </div>
         <div class="brands">
-          <div class="row row-cols-2 row-cols-lg-5 g-4">
+          <div class="row row-cols-2 row-cols-lg-4 g-4">
+              {% for Partner in partners %}
             <div class="col">
               <div class="p-3 border rounded brand-box">
                 <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/01.webp' %}" class="img-fluid" alt="">
+                  <a href="{{ Partner.link }}">
+                    <img src="{{ Partner.image.url }}" class="img-fluid" alt="">
                   </a>
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/02.webp' %}" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/03.webp' %}" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/04.webp' %}" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/05.webp' %}" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/06.webp' %}" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/07.webp' %}" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/08.webp' %}" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/09.webp' %}" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="#">
-                    <img src="{% static 'assets/images/brands/10.webp' %}" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
+              {% endfor %}
           </div>
           <!--end row-->
         </div>

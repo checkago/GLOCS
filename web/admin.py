@@ -5,6 +5,7 @@ from django.contrib import admin
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 from django.contrib.contenttypes.admin import GenericTabularInline
+from import_export.admin import ImportExportModelAdmin
 
 from .models import *
 
@@ -54,7 +55,7 @@ class ProductAdminForm(forms.ModelForm):
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ImportExportModelAdmin):
     actions = [dublicate_product]
     inlines = [ImageGalleryInline]
     form = ProductAdminForm

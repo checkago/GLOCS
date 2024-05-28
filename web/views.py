@@ -14,6 +14,7 @@ class IndexView(views.View):
         categories = Category.objects.all()
         sliders = Banner.objects.all()
         products = Product.objects.all()
+        partners = Partner.objects.all()
         exclusive = Product.objects.filter(color__multycolor=True)
         excluded_names = ['Кайма', 'Высокие', 'Низкие', 'Вкладыш']
         accessories = Product.objects.filter(djibits__isnull=False).exclude(djibits__name__in=excluded_names)
@@ -25,6 +26,7 @@ class IndexView(views.View):
             'title': title,
             'meta_description': meta_description,
             'brands': brands,
+            'partners': partners,
             'categories': categories,
             'products': products,
             'sabo': sabo,

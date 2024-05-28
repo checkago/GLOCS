@@ -108,21 +108,25 @@
   <!--start footer-->
   <section class="footer-section bg-section-2 section-padding">
     <div class="container">
-       <div class="row row-cols-1 row-cols-lg-4 g-4">
-        <div class="col">
+       <div class="row">
+        <div class="col-lg-5">
           <div class="footer-widget-6">
-            <img src="assets/images/logo.webp" class="logo-img mb-3" alt="">
-            <h5 class="mb-3 fw-bold">О компании</h5>
-             <p class="mb-2">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+            <img src="{% static 'assets/images/glocs.webp' %}" class="logo-img mb-3" alt="">
+             <p class="mb-2">
+                 Российский производитель обуви из ЭВА полного цикла: от производства сырья (компаундов) до конечного продукта. Строгий контроль качества от начала и до конца производства гарантирует, что каждая пара обуви соответствует высоким стандартам.
+                 Основной специализацией является создание обуви для мужчин, женщин и детей, которая сочетает в себе комфорт, легкость и стиль.
 
-             <a class="link-dark" href="{% url 'about' %}">Подробнее</a>
+                 <br>Мы <strong>MADE IN RUSSIA</strong> и мы гордимся этим!
+             </p>
+
+             <!-- <a class="link-dark" href="{% url 'about' %}">Подробнее</a> -->
           </div>
         </div>
-        <div class="col">
+        <div class="col-lg-3">
           <div class="footer-widget-7">
           </div>
         </div>
-       <div class="col">
+       <div class="col-lg-2">
           <div class="footer-widget-8">
             <h5 class="mb-3 fw-bold">Меню</h5>
              <ul class="widget-link list-unstyled">
@@ -133,16 +137,10 @@
              </ul>
           </div>
         </div>
-        <div class="col">
+        <div class="col-lg-2">
           <div class="footer-widget-9">
-            <h5 class="mb-3 fw-bold">Следите за нами</h5>
-             <div class="social-link d-flex align-items-center gap-2">
-               <a href="javascript:;"><i class="bi bi-facebook"></i></a>
-               <a href="javascript:;"><i class="bi bi-twitter"></i></a>
-               <a href="javascript:;"><i class="bi bi-linkedin"></i></a>
-               <a href="javascript:;"><i class="bi bi-youtube"></i></a>
-               <a href="javascript:;"><i class="bi bi-instagram"></i></a>
-             </div>
+            <h5 class="mb-3 fw-bold">Связаться за нами:</h5>
+
               {% for Organization in contact_data %}
              <div class="mb-3 mt-3">
               <h5 class="mb-0 fw-bold">Электронная почта</h5>
