@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!--start page content-->
+    <div class="page-content">
+
+
+   <!--start breadcrumb-->
+   <div class="py-4 border-bottom">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+          <li class="breadcrumb-item active" aria-current="page">
+            {% for Text in text  %}
+            {{ Text }}
+            {% endfor %}
+          </li>
+        </ol>
+      </nav>
+    </div>
+   </div>
+   <!--end breadcrumb-->
+
+
+   <!--start product details-->
+   <section class="section-padding">
+    <div class="container">
+        {% for Text in text  %}
+        {{ Text.description|safe }}
+        {% endfor %}
+
+    </div>
+  </section>
+   <!--start product details-->
+
+ </div>
+    <!--end page content-->
+
+{% endblock %}

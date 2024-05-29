@@ -64,8 +64,13 @@
                       <label class="form-label">Сообщение</label>
                       <textarea class="form-control rounded-0" rows="4" cols="4"></textarea>
                     </div>
+                    <div class="md-form mb-2">
+                        <input type="checkbox" id="id_agreement" name="agreement">
+                        <!-- Здесь ссылка на внешний документ -->
+                        <a href="{% url 'agreement' %}" target="_blank">Согласие на обработку персональных данных</a>
+                    </div>
                     <div class="mb-0">
-                      <a href="thank-you.html" class="btn btn-dark btn-ecomm">Отправить сообщение</a>
+                      <a href="thank-you.html" class="btn btn-dark btn-ecomm" onclick="return validateForm()">Отправить сообщение</a>
                     </div>
                   </div>
                 </form>
@@ -101,5 +106,14 @@
 
      </div>
     <!--end page content-->
-
+<script>
+    function validateForm() {
+        var agreementCheckbox = document.getElementById("id_agreement");
+        if (!agreementCheckbox.checked) {
+            alert("Пожалуйста, согласитесь с условиями обработки персональных данных");
+            return false; // Остановить отправку формы
+        }
+        return true; // Разрешить отправку формы
+    }
+</script>
 {% endblock %}

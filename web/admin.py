@@ -125,3 +125,18 @@ class PartnerAdmin(admin.ModelAdmin):
 @admin.register(Social)
 class SocialAdmin(admin.ModelAdmin):
     list_display = ('name',)
+
+
+class TextAdminForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorUploadingWidget(config_name='awesome_ckeditor'), required=False)
+
+    class Meta:
+        verbose_name = 'Текст'
+        model = Text
+        fields = '__all__'
+
+
+@admin.register(Text)
+class TextAdmin(admin.ModelAdmin):
+    form = TextAdminForm
+    list_display = ('id', 'name',)

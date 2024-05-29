@@ -4,7 +4,7 @@ from django.conf import settings
 from django.urls import path
 from . import views
 from .views import IndexView, about, contact, ProductDetailView, \
-    CatalogView
+    CatalogView, agreement
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('contacts', contact, name='contact'),
     path('catalog/', CatalogView.as_view(), name='catalog'),
     path('product/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
+    path('agreement', agreement, name='agreement'),
 ]
 
 if settings.MEDIA_ROOT:

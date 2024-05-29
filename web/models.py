@@ -230,3 +230,15 @@ class Social(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Text(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Заголовок')
+    description = models.TextField(verbose_name='Текст')
+
+    class Meta:
+        verbose_name = 'Текст'
+        verbose_name_plural = 'Тексты'
+
+    def __str__(self):
+        return self.name

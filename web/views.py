@@ -127,3 +127,9 @@ class ProductDetailView(DetailView):
         context['sizes'] = self.object.size.all().order_by('name')
         return context
 
+
+def agreement(request):
+    text = Text.objects.filter(id=1)
+
+    return render(request, 'text.html', {'text': text})
+
