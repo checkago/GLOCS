@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django import views
 from django.views.generic import DetailView
+from web.forms import *
 
 from web.models import *
 
@@ -52,7 +53,18 @@ def contact(request):
     description = 'Описание страницы'
     contact_data = Organization.objects.all()
 
-    return render(request, 'contacts.html', {'title': title, 'description': description, 'contact_data': contact_data})
+    if request.method == 'POST':
+        fback = FeedbackForm(request.POST)
+
+        if fback.is_valid():
+            Feedback = fback.save(commit=False)
+            Feedback.save()
+            return redirect('/')
+
+    else:
+        fback = FeedbackForm()
+
+    return render(request, 'contacts.html', {'fback': fback, 'title': title, 'description': description, 'contact_data': contact_data})
 
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger

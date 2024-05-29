@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from email_signals.models import EmailSignalMixin
 
 from utils import upload_function
 
@@ -239,6 +240,21 @@ class Text(models.Model):
     class Meta:
         verbose_name = 'Текст'
         verbose_name_plural = 'Тексты'
+
+    def __str__(self):
+        return self.name
+
+
+class Feedback(models.Model, EmailSignalMixin):
+    name = models.CharField(max_length=35, verbose_name='Имя')
+    email = models.EmailField(verbose_name='Е-мэйл')
+    phone = models.CharField(max_length=17, blank=True, verbose_name='Номер телефона')
+    comment = models.TextField(max_length=350, verbose_name='Комментарий')
+    agreement = models.BooleanField(default=False, verbose_name='Согласие(персональные данные)')
+
+    class Meta:
+        verbose_name = 'Форма обратной связи'
+        verbose_name_plural = 'Формы обратной связи'
 
     def __str__(self):
         return self.name

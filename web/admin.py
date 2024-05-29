@@ -140,3 +140,8 @@ class TextAdminForm(forms.ModelForm):
 class TextAdmin(admin.ModelAdmin):
     form = TextAdminForm
     list_display = ('id', 'name',)
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'email', 'phone')

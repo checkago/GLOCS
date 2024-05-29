@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'import_export',
+    'email_signals',
+    'crispy_forms',
 ]
 
 
@@ -52,6 +54,14 @@ INSTALLED_APPS = [
 # RECAPTCHA_DEFAULT_ACTION = 'generic'
 # RECAPTCHA_SCORE_THRESHOLD = 0.5
 # RECAPTCHA_LANGUAGE = 'ru'
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'site@glocs.ru'
+EMAIL_HOST_PASSWORD = 'phFnf6Hstyq2Cfuw4kr1'
+EMAIL_SIGNAL_DEFAULT_SENDER = 'site@glocs.ru'
 
 
 MIDDLEWARE = [
