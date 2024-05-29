@@ -85,6 +85,7 @@ class CatalogView(views.View):
         types_selected = request.GET.getlist('type')
         colors_selected = request.GET.getlist('color')
         djibits_selected = request.GET.getlist('djibits')
+        contact_data = Organization.objects.filter(active=True)
         if brands_selected:
             products = products.filter(brand__name__in=brands_selected)
         if models_selected:
@@ -124,6 +125,7 @@ class CatalogView(views.View):
             'types_selected': types_selected,
             'colors_selected': colors_selected,
             'djibits_selected': djibits_selected,
+            'contact_data': contact_data
         }
         return render(request, 'catalog.html', context)
 
@@ -132,16 +134,18 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'product_detail.html'
     context_object_name = 'product'
-
+    contact_data = Organization.objects.filter(active=True)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = Product.objects.all()
         context['sizes'] = self.object.size.all().order_by('name')
+        context['contact_data'] = Organization.objects.filter(active=True)
         return context
 
 
 def agreement(request):
     text = Text.objects.filter(id=1)
+    contact_data = Organization.objects.filter(active=True)
 
-    return render(request, 'text.html', {'text': text})
+    return render(request, 'text.html', {'text': text, 'contact_data': contact_data})
 
