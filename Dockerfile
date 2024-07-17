@@ -13,7 +13,7 @@ RUN apk add gcc libc-dev libffi-dev jpeg-dev zlib-dev libjpeg libwebp-dev
 RUN apk add postgresql-dev
 
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip --default-timeout=1200 install -r requirements.txt
 
 
 RUN chmod +x entrypoint.sh
