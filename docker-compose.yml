@@ -19,7 +19,8 @@ services:
     volumes:
       - ./:/usr/src/GLOCS
     ports:
-      - "8080:8080"
+      - "80:80"
+      - "443:443"
     depends_on:
       - postgresdb
 
@@ -29,6 +30,7 @@ services:
       dockerfile: Dockerfile
     ports:
     - "80:80"
+    - "443:443"
     depends_on:
       - web
 
