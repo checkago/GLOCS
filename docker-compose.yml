@@ -1,17 +1,6 @@
 version: "3"
 
 services:
-  postgresdb:
-    build:
-      context: ./docker/postgres
-      dockerfile: Dockerfile
-    environment:
-      - POSTGRES_PASSWORD=Gkh747c
-    volumes:
-    - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-    - "5432:5432"
-
   web:
     build:
       context: ./
@@ -20,8 +9,6 @@ services:
       - ./:/usr/src/GLOCS
     ports:
       - "8080:8080"
-    depends_on:
-      - postgresdb
 
   nginx:
     build:
